@@ -1,7 +1,7 @@
 ### Unreleased
 
 * bug fixes
-  * Record the 401 status of a request halted by Warden in the `process_action.action_controller` payload, instead of writing it into the log payload. Rails 8.2 logs from a frozen event payload, so the old way raised `FrozenError` and lost the log line.
+  * Record the 401 status of a request halted by Warden in the `process_action.action_controller` payload, instead of writing it into the log payload. Rails 8.2 logs from a frozen event payload, so the old way raised `FrozenError` and lost the log line. [#5877](https://github.com/heartcombo/devise/pull/5877)
 
 ### 5.0.4 - 2026-05-08
 
