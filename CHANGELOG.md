@@ -1,3 +1,8 @@
+### Unreleased
+
+* bug fixes
+  * Do not modify a frozen payload in `log_process_action`. Rails 8.2 logs requests from a frozen event payload, so a sign-in redirect raised `FrozenError` while logging.
+
 ### 5.0.4 - 2026-05-08
 
 * security fixes

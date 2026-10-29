@@ -81,8 +81,12 @@ module Devise
         end
 
         def log_process_action(payload)
-          payload[:status] ||= 401 unless payload[:exception]
-          super
+          unless payload[:exception] || payload[:status]
+            # Rails 8.2 logs from a frozen event payload.
+            payload = payload.dup if payload.frozen?
+            payload[:status] = 401
+          end
+          super(payload)
         end
       end
 

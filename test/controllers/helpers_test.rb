@@ -332,6 +332,27 @@ class ControllerAuthenticatableTest < Devise::ControllerTestCase
     assert_not @controller.is_flashing_format?
   end
 
+  test 'log_process_action sets a missing status to 401' do
+    payload = {}
+    ApplicationController.log_process_action(payload)
+    assert_equal 401, payload[:status]
+  end
+
+  test 'log_process_action keeps an existing status or exception' do
+    payload = { status: 302 }
+    ApplicationController.log_process_action(payload)
+    assert_equal 302, payload[:status]
+
+    payload = { exception: ["RuntimeError", "boom"] }
+    ApplicationController.log_process_action(payload)
+    assert_nil payload[:status]
+  end
+
+  test 'log_process_action does not modify a frozen payload' do
+    payload = { controller: "UsersController", action: "index" }.freeze
+    assert_nothing_raised { ApplicationController.log_process_action(payload) }
+  end
+
   test 'is not a devise controller' do
     assert_not @controller.devise_controller?
   end
